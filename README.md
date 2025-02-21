@@ -5,14 +5,31 @@
 ![License CC BY-NC-SA](https://img.shields.io/badge/license-CC_BY--NC--SA--green.svg?style=plastic)
 
 This is the origin Pytorch implementation of FPPformer-MD in the following paper: 
-[Inconsistent Multivariate Time Series Forecasting] (Manuscript submitted to Information Fusion).
+[Inconsistent Multivariate Time Series Forecasting] (Manuscript submitted to IEEE Transactions on Knowledge and Data Engineering).
 
 ## Model Architecture
-The schematic in Figure 1 unveils the architecture of FPPformerV2. Compared with the former version, its encoder gets a novel attention mechanism. It is dubbed IEMD attention as it extracts the inter-relationships of different variables on the basis of EMD, which plays the role of a discriminator to determine whether the arbitrary variable pair owns underlying inter-relationship or not. IEMD attention is arranged at the end of each encoder stage, accompanied with a conventional feed-forward layer, to maintain the hierarchical architecture of the encoder and utilize the fully extracted sequence features of each variable provided by the preceding element-wise and patch-wise attention. The inter-relationships of different variables in IEMD attention are extracted in the patch level, rather than the entire sequence level, to economizes the computational cost. Besides, the decoder receives a hybrid of seasonal signals, whose periods are identified from the IMFs of input sequences, in lieu of a simple zero-initialized tensor. Instance normalization, which a prevailing technique proposed by T. Kim et al., is applied to it like the input of encoder to ensure the identical distribution of input and prediction sequence. IEMD attention is no longer deployed in decoder since the encoder has already extracted the inter-relationships of input sequences from all variables, whose existences are determined by the dominant periodic ingredients of each input sequence. Meanwhile, these dominant periodic ingredients also constitute the decoder input, making IEMD attention redundant in decoder.
-
-As a whole, on the basis of EMD, the self-attentions in FPPformV2 encoder extract the parametric global input sequence features shared by all time-series sequences, as well as the dynamic cross-variable inter-relationships while FPPformV2 decoder receives the non-parametric local input sequence features, which vary with different input sequences. The global features and the local features interact with each other in the cross-attention modules of decoder, endowing with the property of global-local forecasting to FPPformerV2.
-
-After outlining the model architecture of FPPformerV2, we commence the expositions of its two core and unique components.
+This work intends to solve two general problems involved
+in deep MTSF. (1) The existing approaches for addressing
+JOURNAL OF IEEE TRANSACTIONS ON KNOWLEDGE AND DATA ENGINEERING 5
+variable correlations, including CD and CI approaches, consistently ignore or extract all possible variable correlations,
+making them either insufficient or inappropriate. (2) The
+existing data augmentation methods hardly exploit variable
+correlations to generate more training instances. Moreover,
+since we mainly combine the proposed inconsistent MTSF
+approach with the FPPformer, this work also attempts to
+compensate for the inadequacy of the input features in the
+embedding layer of the FPPformer. To address these problems,
+we propose an MVCI method that dynamically identifies local
+variable correlations and an ICVA module that adaptively
+extracts the cross-variable features of the correlated variables,
+thus solving general problem (1). Moreover, the MODWT
+smooths produced by MVCI can additionally provide interpretable input features to enrich the input of the FPPformer.
+Then, the unique problem of the FPPformer is solved. We also
+propose a CVDA method to generate more training instances
+by conducting DMD on the multivariate input sequences,
+hence addressing general problem (2). As shown in Fig. 1,
+five major steps are required to upgrade the FPPformer to our
+proposed FPPformer-MD model.
 <p align="center">
 <img src="./img/Architecture.png" height = "700" alt="" align=center />
 <br><br>
