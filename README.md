@@ -1,11 +1,11 @@
-# FPPformerV2: EMD-Based Short Input Long Sequence Time-Series Forecasting
+# Inconsistent Multivariate Time Series Forecasting
 ![Python 3.11](https://img.shields.io/badge/python-3.11-green.svg?style=plastic)
 ![PyTorch 2.1.0](https://img.shields.io/badge/PyTorch%20-%23EE4C2C.svg?style=plastic)
-![cuDNN 8.2.0](https://img.shields.io/badge/cudnn-8.2.0-green.svg?style=plastic)
+![CUDA 11.8](https://img.shields.io/badge/cuda-11.8-green.svg?style=plastic)
 ![License CC BY-NC-SA](https://img.shields.io/badge/license-CC_BY--NC--SA--green.svg?style=plastic)
 
-This is the origin Pytorch implementation of FPPformer in the following paper: 
-[FPPformerV2: EMD-Based Short Input Long Sequence Time-Series Forecasting] (Manuscript submitted to Information Fusion).
+This is the origin Pytorch implementation of FPPformer-MD in the following paper: 
+[Inconsistent Multivariate Time Series Forecasting] (Manuscript submitted to Information Fusion).
 
 ## Model Architecture
 The schematic in Figure 1 unveils the architecture of FPPformerV2. Compared with the former version, its encoder gets a novel attention mechanism. It is dubbed IEMD attention as it extracts the inter-relationships of different variables on the basis of EMD, which plays the role of a discriminator to determine whether the arbitrary variable pair owns underlying inter-relationship or not. IEMD attention is arranged at the end of each encoder stage, accompanied with a conventional feed-forward layer, to maintain the hierarchical architecture of the encoder and utilize the fully extracted sequence features of each variable provided by the preceding element-wise and patch-wise attention. The inter-relationships of different variables in IEMD attention are extracted in the patch level, rather than the entire sequence level, to economizes the computational cost. Besides, the decoder receives a hybrid of seasonal signals, whose periods are identified from the IMFs of input sequences, in lieu of a simple zero-initialized tensor. Instance normalization, which a prevailing technique proposed by T. Kim et al., is applied to it like the input of encoder to ensure the identical distribution of input and prediction sequence. IEMD attention is no longer deployed in decoder since the encoder has already extracted the inter-relationships of input sequences from all variables, whose existences are determined by the dominant periodic ingredients of each input sequence. Meanwhile, these dominant periodic ingredients also constitute the decoder input, making IEMD attention redundant in decoder.
