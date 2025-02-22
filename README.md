@@ -8,44 +8,24 @@ This is the origin Pytorch implementation of FPPformer-MD in the following paper
 [Inconsistent Multivariate Time Series Forecasting] (Manuscript submitted to IEEE Transactions on Knowledge and Data Engineering).
 
 ## Model Architecture
-This work intends to solve two general problems involved
-in deep MTSF. (1) The existing approaches for addressing
-JOURNAL OF IEEE TRANSACTIONS ON KNOWLEDGE AND DATA ENGINEERING 5
-variable correlations, including CD and CI approaches, consistently ignore or extract all possible variable correlations,
-making them either insufficient or inappropriate. (2) The
-existing data augmentation methods hardly exploit variable
-correlations to generate more training instances. Moreover,
-since we mainly combine the proposed inconsistent MTSF
-approach with the FPPformer, this work also attempts to
-compensate for the inadequacy of the input features in the
-embedding layer of the FPPformer. To address these problems,
-we propose an MVCI method that dynamically identifies local
-variable correlations and an ICVA module that adaptively
-extracts the cross-variable features of the correlated variables,
-thus solving general problem (1). Moreover, the MODWT
-smooths produced by MVCI can additionally provide interpretable input features to enrich the input of the FPPformer.
-Then, the unique problem of the FPPformer is solved. We also
-propose a CVDA method to generate more training instances
-by conducting DMD on the multivariate input sequences,
-hence addressing general problem (2). As shown in Fig. 1,
-five major steps are required to upgrade the FPPformer to our
-proposed FPPformer-MD model.
+This work intends to solve two general problems involved in deep MTSF. (1) The existing approaches for addressing variable correlations, including CD and CI approaches, consistently ignore or extract all possible variable correlations, making them either insufficient or inappropriate. (2) The existing data augmentation methods hardly exploit variable correlations to generate more training instances. Moreover, since we mainly combine the proposed inconsistent MTSF approach with the FPPformer, this work also attempts to compensate for the inadequacy of the input features in the embedding layer of the FPPformer. To address these problems, we propose an MVCI method that dynamically identifies local variable correlations and an ICVA module that adaptively extracts the cross-variable features of the correlated variables, thus solving general problem (1). Moreover, the MODWT smooths produced by MVCI can additionally provide interpretable input features to enrich the input of the FPPformer. Then, the unique problem of the FPPformer is solved. We also propose a CVDA method to generate more training instances by conducting DMD on the multivariate input sequences, hence addressing general problem (2). As shown in Fig. 1, five major steps are required to upgrade the FPPformer to our proposed FPPformer-MD model:
 <p align="center">
-<img src="./img/Architecture.png" height = "700" alt="" align=center />
+<img src="./img/FPPformer_MD_structure.pdf" height = "700" alt="" align=center />
 <br><br>
-<b>Figure 1.</b> The architecture of FPPformerV2. Two improvements to the former version are highlighted in red.
+<b>Figure 1.</b> The architecture of FPPformer-MD with a $N$-stage encoder and a $M$-stage decoder  ($N=M=6$ in experiment). The colored modules are the novel methods proposed in this work.
 </p>
 
-
 ## Requirements
-
-- Python 3.8.8
-- matplotlib == 3.3.4
-- numpy == 1.20.1
-- pandas == 1.2.4
-- scipy == 1.9.0
-- scikit_learn == 0.24.1
-- torch == 1.11.0
+- python == 3.11.4
+- numpy == 1.24.3
+- pandas == 1.5.3
+- scipy == 1.11.3
+- torch == 2.1.0+cu118
+- scikit-learn == 1.3.0
+- PyWavelets == 1.4.1
+- astropy == 6.1
+- h5py == 3.7.0
+- geomstat == 2.5.0
 
 Dependencies can be installed using the following command:
 ```bash
