@@ -152,7 +152,7 @@ Here we provide a more detailed and complete command description for training an
 |    num_workers     |                                                  Data loader num workers                                                   |
 |      itr       |                                             Experiments times                                              |
 |  train_epochs  |                                      Train epochs of the second stage                                      |
-|   batch_size   |                         The batch size of training input data in the second stage                          |
+|   batch_size   |                         The batch size of training input data                          |
 |   decay   |                         Decay rate of learning rate per epoch                         |
 |    patience    |                                          Early stopping patience                                           |
 | learning_rate  |                                          Optimizer learning rate                                           |
