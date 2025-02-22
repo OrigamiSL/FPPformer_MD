@@ -8,18 +8,7 @@ This is the origin Pytorch implementation of FPPformer-MD in the following paper
 [Inconsistent Multivariate Time Series Forecasting] (Manuscript submitted to IEEE Transactions on Knowledge and Data Engineering).
 
 ## Model Architecture
-This work intends to solve two general problems involved in deep MTSF. (1) The existing approaches for addressing variable correlations, including CD and CI approaches, consistently ignore or extract all possible variable correlations, making them either insufficient or inappropriate. (2) The existing data augmentation methods hardly exploit variable correlations to generate more training instances. Moreover, since we mainly combine the proposed inconsistent MTSF approach with the FPPformer, this work also attempts to compensate for the inadequacy of the input features in the embedding layer of the FPPformer. To address these problems, we propose an MVCI method that dynamically identifies local variable correlations and an ICVA module that adaptively extracts the cross-variable features of the correlated variables, thus solving general problem (1). Moreover, the MODWT smooths produced by MVCI can additionally provide interpretable input features to enrich the input of the FPPformer. Then, the unique problem of the FPPformer is solved. We also propose a CVDA method to generate more training instances by conducting DMD on the multivariate input sequences, hence addressing general problem (2). As shown in Figure 1, five major steps are required to upgrade the FPPformer to our proposed FPPformer-MD model:
-
-Frequency-Scale Decomposition: Given an arbitrary multivariate input sequence $\mathbfcal{X}_{t_{1}:t_{2}}$, it is decomposed into $j+1$ frequency scales, which are represented by $\{\boldsymbol{v}_{j}, \boldsymbol{w}_{1}, \boldsymbol{w}_{2}, \dots, \boldsymbol{w}_{j}\mid\boldsymbol{v}, \boldsymbol{w} \in \mathbb{R}^{L_{in} \times V} \}$, via the MODWT.}
-\item {\textbf{Adjacency Matrix Generation}: The variances of different frequency scales are computed to obtain the most significant frequency scale for each univariate sequence in $\mathbfcal{X}_{t_{1}:t_{2}}$. Then, an adjacency matrix $\boldsymbol{A} \in {Bool}^{V \times V}$, where the value 0 indicates the existence of a correlation and the value 1 indicates the opposite scenario, is generated to express the existence of a correlation between any variable pair.
-
-\item {\textbf{Enriching the Input Features with MODWT Smooths}: The MODWT-based MRA process is performed based on the decomposition results obtained in step (1) to acquire the MODWT smooths $\{ \boldsymbol{S}_{1}, \boldsymbol{S}_{2}, \dots, \boldsymbol{S}_{j} \mid \boldsymbol{S} \in \mathbb{R}^{L_{in} \times V} \}$ of $\mathbfcal{X}_{t_{1}:t_{2}}$. They are concatenated with $\mathbfcal{X}_{t_{1}:t_{2}}$ in the temporal dimension to enrich the input features.
-}
-\item {
-	\textbf{DMD-Based Data Augmentation}: $\mathbfcal{X}_{t_{1}:t_{2}}$ is split into at most $j+1$ groups according to step (2). This process has a chance to augment each variable group individually with DMD to provide more instances during training.
-}
-\item {\textbf{Masking the Uncorrelated Variables via ICVA}: An ICVA module is placed after each temporal patchwise attention module in the encoder of the FPPformer. ICVA performs attention along the variable dimension, and its attention score is masked with $\boldsymbol{A}$ from step (2) to reduce the connections among uncorrelated variables.
-}
+This work intends to solve two general problems involved in deep MTSF. (1) The existing approaches for addressing variable correlations, including CD and CI approaches, consistently ignore or extract all possible variable correlations, making them either insufficient or inappropriate. (2) The existing data augmentation methods hardly exploit variable correlations to generate more training instances. Moreover, since we mainly combine the proposed inconsistent MTSF approach with the FPPformer, this work also attempts to compensate for the inadequacy of the input features in the embedding layer of the FPPformer. To address these problems, we propose an MVCI method that dynamically identifies local variable correlations and an ICVA module that adaptively extracts the cross-variable features of the correlated variables, thus solving general problem (1). Moreover, the MODWT smooths produced by MVCI can additionally provide interpretable input features to enrich the input of the FPPformer. Then, the unique problem of the FPPformer is solved. We also propose a CVDA method to generate more training instances by conducting DMD on the multivariate input sequences, hence addressing general problem (2). As shown in Figure 1, five major steps, highlighted in colors, are required to upgrade the FPPformer to our proposed FPPformer-MD model.
 <p align="center">
 <img src="./img/FPPformer-MD.jpg" height = "300" alt="" align=center />
 <br><br>
@@ -180,37 +169,26 @@ Here we provide a more detailed and complete command description for training an
 
 
 ## Results
-The experiment parameters of each data set are formated in the `Main.sh` files in the directory `./scripts/`. You can refer to these parameters for experiments, and you can also adjust the parameters to obtain better mse and mae results or draw better prediction figures. We also provide the commands for obtain the results of FPPformer-MD with longer input sequence length (336) in the file `./scripts/Main.sh`. We present the full results of multivariate forecasting results in 
+The experiment parameters of each data set are formated in the `Main.sh` files in the directory `./scripts/`. You can refer to these parameters for experiments, and you can also adjust the parameters to obtain better mse and mae results or draw better prediction figures. We also provide the commands for obtain the results of FPPformer-MD with longer input sequence length (336) in the file `./scripts/Main.sh`. We present the full results of multivariate forecasting results in Figure 2 and Figure 3. Moreover, we compare FPPformer-MD with other outperforming baselines equipped with individual settings in Figure 4.
 
 <p align="center">
-<img src="./img/Multivariate.png" height = "500" alt="" align=center />
+<img src="./img/result1.jpg" height = "500" alt="" align=center />
 <br><br>
-<b>Figure 2.</b> Multivariate forecasting results
+<b>Figure 2.</b> Multivariate forecasting results (Input length = 96). ETTh denotes the average of ETTh$_{1}$ and ETTh$_{2}$. ETTm denotes the average of ETTm$_{1}$ and ETTm$_{2}$. PeMS denotes the average of \{PeMSD3, PeMSD4, PeMSD7, PeMSD8\}.
 </p>
 
 <p align="center">
-<img src="./img/Univariate.png" height = "400" alt="" align=center />
+<img src="./img/result2.jpg" height = "400" alt="" align=center />
 <br><br>
-<b>Figure 3.</b> Univariate forecasting results
+<b>Figure 3.</b> Multivariate forecasting results (Input length = 96)
 </p>
 
-### Full results
-Moreover, we present the full results of multivariate forecasting results with long input sequence lengths in Figure 4, that of ablation study in Figure 5 and that of parameter sensitivity in Figure 6.
 <p align="center">
-<img src="./img/Long.png" height = "500" alt="" align=center />
+<img src="./img/result3.jpg" height = "400" alt="" align=center />
 <br><br>
-<b>Figure 4.</b> Multivariate forecasting results with long input lengths
+<b>Figure 4.</b> Multivariate forecasting results (Individual settings)
 </p>
-<p align="center">
-<img src="./img/Ablation.png" height = "400" alt="" align=center />
-<br><br>
-<b>Figure 5.</b> Ablation results with the prediction length of 720
-</p>
-<p align="center">
-<img src="./img/Parameter.png" height = "500" alt="" align=center />
-<br><br>
-<b>Figure 6.</b> Results of parameter sensitivity on stage numbers
-</p>
+
 
 ## Contact
 If you have any questions, feel free to contact Li Shen through Email (shenli@buaa.edu.cn) or Github issues. Pull requests are highly welcomed!
