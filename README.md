@@ -174,17 +174,17 @@ The experiment parameters of each data set are formated in the `Main.sh` files i
 <p align="center">
 <img src="./img/result1.jpg" height = "500" alt="" align=center />
 <br><br>
-<b>Figure 2.</b> Multivariate forecasting results (Input length = 96). ETTh denotes the average of ETTh$_{1}$ and ETTh$_{2}$. ETTm denotes the average of ETTm$_{1}$ and ETTm$_{2}$. PeMS denotes the average of \{PeMSD3, PeMSD4, PeMSD7, PeMSD8\}.
+<b>Figure 2.</b> Multivariate forecasting results (Input length = 96). ETTh denotes the average of ETTh1 and ETTh2. ETTm denotes the average of ETTm1 and ETTm2. PeMS denotes the average of {PeMSD3, PeMSD4, PeMSD7, PeMSD8}.
 </p>
 
 <p align="center">
-<img src="./img/result2.jpg" height = "400" alt="" align=center />
+<img src="./img/result2.jpg" height = "500" alt="" align=center />
 <br><br>
 <b>Figure 3.</b> Multivariate forecasting results (Input length = 96)
 </p>
 
 <p align="center">
-<img src="./img/result3.jpg" height = "400" alt="" align=center />
+<img src="./img/result3.jpg" height = "150" alt="" align=center />
 <br><br>
 <b>Figure 4.</b> Multivariate forecasting results (Individual settings)
 </p>
