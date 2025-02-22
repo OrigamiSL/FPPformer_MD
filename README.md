@@ -81,15 +81,12 @@ The folder tree in https://github.com/guoshnBJTU/ASTGNN/tree/main/data:
 |-PEMS04
 | |-PEMS04.csv
 | |-PEMS04.npz
-| |-PEMS04.txt
 |-PEMS07
 | |-PEMS07.csv
 | |-PEMS07.npz
-| |-PEMS07.txt
 |-PEMS08
 | |-PEMS08.csv
 | |-PEMS08.npz
-| |-PEMS08.txt
 
 The folder tree in https://drive.google.com/drive/folders/10FOTa6HXPqX8Pf5WRoRwcFnW9BrNZEIX:
 |-metr-la.h5
