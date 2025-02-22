@@ -147,7 +147,7 @@ Here we provide a more detailed and complete command description for training an
 |augmentation_method   |                                           Augmentation method                                           |
 |  augmentation_ratio   |                                           Augmentation ratio                                           |
 |  augmentation_len   |                                           Augmentation length                                           |
-|  decoder_IN   |                                          whether to perform IN for decoder inputh                                           |
+|  decoder_IN   |                                          Whether to perform IN for decoder inputh                                           |
 |    dropout     |                                                  Dropout                                                   |
 |    num_workers     |                                                  Data loader num workers                                                   |
 |      itr       |                                             Experiments times                                              |
