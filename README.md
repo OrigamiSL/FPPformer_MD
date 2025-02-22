@@ -170,7 +170,7 @@ The experiment parameters of each data set are formated in the `Main.sh` files i
 <p align="center">
 <img src="./img/result2.jpg" height = "500" alt="" align=center />
 <br><br>
-<b>Figure 3.</b> Multivariate forecasting results (Input length = 96)
+<b>Figure 3.</b> Full multivariate forecasting results (Input length = 96)
 </p>
 
 <p align="center">
