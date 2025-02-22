@@ -34,13 +34,12 @@ pip install -r requirements.txt
 
 ## Data
 
-ETT, ECL, Traffic and Weather dataset were acquired at: [here](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy?usp=sharing). Solar dataset was acquired at: [Solar](https://drive.google.com/drive/folders/1Gv1MXjLo5bLGep4bsqDyaNMI2oQC9GH2?usp=sharing). The raw data of Air dataset was acquired at: [Air](https://archive.ics.uci.edu/dataset/360/air+quality). The raw data of River dataset was acquired at: [River](https://www.kaggle.com/datasets/samanemami/river-flowrf2). The raw data of BTC dataset was acquired at: [BTC](https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd). The raw data of ETH dataset was acquired at: [ETH](https://www.kaggle.com/datasets/franoisgeorgesjulien/crypto).
+ETT, ECL, Traffic and Weather dataset were acquired at: [here](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy?usp=sharing). Solar dataset was acquired at: [Solar](https://drive.google.com/drive/folders/1Gv1MXjLo5bLGep4bsqDyaNMI2oQC9GH2?usp=sharing). PeMSD3, PeMSD4, PeMSD7 and PeMSD8 were acquired at: [PeMS](https://github.com/guoshnBJTU/ASTGNN/tree/main/data). PeMS-Bay was acquired at: [PeMS-Bay](https://drive.google.com/drive/folders/10FOTa6HXPqX8Pf5WRoRwcFnW9BrNZEIX).
 
 ### Data Preparation
-After you acquire raw data of all datasets, please separately place them in corresponding folders at `./FPPformerV2/data`. 
+After you acquire raw data of all datasets, please separately place them in corresponding folders at `./data`. 
 
 We place ETT in the folder `./ETT-data`, ECL in the folder `./electricity`  and weather in the folder `./weather` of [here](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy?usp=sharing) (the folder tree in the link is shown as below) into folder `./data` and rename them from `./ETT-data`,`./electricity`, `./traffic` and `./weather` to `./ETT`, `./ECL`, `./Traffic` and`./weather` respectively. We rename the file of ECL/Traffic from `electricity.csv`/`traffic.csv` to `ECL.csv`/`Traffic.csv` and rename its last variable from `OT`/`OT` to original `MT_321`/`Sensor_861` separately.
-
 ```
 The folder tree in https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy?usp=sharing:
 |-autoformer
@@ -69,41 +68,38 @@ The folder tree in https://drive.google.com/drive/folders/1Gv1MXjLo5bLGep4bsqDya
 | | |-solar_AL.txt
 ```
 
-We place Air/River/BTC/ETH in [Air](https://archive.ics.uci.edu/dataset/360/air+quality) /[River](https://www.kaggle.com/datasets/samanemami/river-flowrf2) /[BTC](https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd) /[ETH](https://www.kaggle.com/datasets/franoisgeorgesjulien/crypto) (the folder tree in the link is shown as below) into the folder `./Air`/`./River`/`./BTC`/`./ETH` respectively. 
+We place the NPZ files ('PEMS03.npz', 'PEMS04.npz', 'PEMS07.npz', 'PEMS08.npz') of PeMSD3, PeMSD4, PeMSD7 and PeMSD8 in the folder `./PEMS03`, `./PEMS03`, `./PEMS03` and `./PEMS03` of [PeMS](https://github.com/guoshnBJTU/ASTGNN/tree/main/data) 
+ into the folder `./data/PEMS`. We place the H5 file ('pems-bay.h5') of PeMS-Bay in the [PeMS-Bay](https://drive.google.com/drive/folders/10FOTa6HXPqX8Pf5WRoRwcFnW9BrNZEIX) into the folder `./data/PEMS`. The folder trees in the mentioned two links are shown as below:
 
 ```
-The folder tree in https://archive.ics.uci.edu/dataset/360/air+quality:
-|-air+quality
-| |-AirQualityUCI.csv
-| |-AirQualityUCI.xlsx
+The folder tree in https://github.com/guoshnBJTU/ASTGNN/tree/main/data:
+|-PEMS03
+| |-PEMS03.csv
+| |-PEMS03.npz
+| |-PEMS03.txt
+|-PEMS04
+| |-PEMS04.csv
+| |-PEMS04.npz
+| |-PEMS04.txt
+|-PEMS07
+| |-PEMS07.csv
+| |-PEMS07.npz
+| |-PEMS07.txt
+|-PEMS08
+| |-PEMS08.csv
+| |-PEMS08.npz
+| |-PEMS08.txt
 
-The folder tree in https://www.kaggle.com/datasets/samanemami/river-flowrf2:
-|-river-flowrf2
-| |-RF2.csv
-
-The folder tree in https://www.kaggle.com/datasets/prasoonkottarathil/btcinusd:
-|-btcinusd
-| |-BTC-Hourly.csv
-
-The folder tree in https://www.kaggle.com/datasets/franoisgeorgesjulien/crypto:
-|-crypto
-| |-Binance_ETHUSDT_1h (1).csv
+The folder tree in https://drive.google.com/drive/folders/10FOTa6HXPqX8Pf5WRoRwcFnW9BrNZEIX:
+|-metr-la.h5
+|-pems-bay.h5
 ```
 
-Then you can run `./data/preprocess.py` to preprocess the raw data of Air, River, BTC and ETH datasets. We replace the missing values, which are tagged with -200 value, by the average values of normal ones. We remove the variable `NMHC(GT)` in Air dataset in that all data of thisvariable in test subset is missing. We rename the file of BTC/ETH from `RF2.csv`/`BTC-Hourly.csv`/`Binance_ETHUSDT_1h (1).csv` to `River`/`BTC.csv`/`ETH.csv` After you successfully run `./data/preprocess.py`, you will obtain folder tree:
+After you process all the datasets, you will obtain folder tree:
 ```
 |-data
-| |-Air
-| | |-Air.csv
-| |
-| |-BTC
-| | |-BTC.csv
-| |
 | |-ECL
 | | |-ECL.csv
-| |
-| |-ETH
-| | |-ETH.csv
 | |
 | |-ETT
 | | |-ETTh1.csv
@@ -111,8 +107,12 @@ Then you can run `./data/preprocess.py` to preprocess the raw data of Air, River
 | | |-ETTm1.csv
 | | |-ETTm2.csv
 | |
-| |-River
-| | |-River.csv
+| |-PEMS
+| | |-PEMS03.npz
+| | |-PEMS04.npz
+| | |-PEMS07.npz
+| | |-PEMS08.npz
+| | |-pems-bay.h5
 | |
 | |-Solar
 | | |-solar_AL.txt
