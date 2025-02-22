@@ -127,19 +127,14 @@ After you process all the datasets, you will obtain folder tree:
 ```
 
 ## Usage
-Commands for training and testing FPPformer of all datasets are in `./scripts/Main.sh`.
+Commands for training and testing FPPformer-MD of all datasets are in `./scripts/Main.sh`. 
 
 More parameter information please refer to `main.py`.
 
-We provide a complete command for training and testing FPPformer:
+We provide a complete command for training and testing FPPformer-MD:
 
-For multivariate forecasting:
 ```
-python -u main.py --data <data> --features <features> --input_len <input_len> --pred_len <pred_len> --encoder_layer <encoder_layer> --patch_size <patch_size> --d_model <d_model> --learning_rate <learning_rate> --dropout <dropout> --batch_size <batch_size> --train_epochs <train_epochs> --patience <patience> --itr <itr> --train
-```
-For univariate forecasting:
-```
-python -u main_M4.py --data <data> --freq <freq> --input_len <input_len> --pred_len <pred_len> --encoder_layer <encoder_layer> --patch_size <patch_size> --d_model <d_model> --learning_rate <learning_rate> --dropout <dropout> --batch_size <batch_size> --train_epochs <train_epochs> --patience <patience> --itr <itr> --train
+python -u main.py --data <data> --input_len <input_len> --pred_len <pred_len> --encoder_layer <encoder_layer> --layer_stack <layer_stack> --MODWT_level<MODWT_level> --patch_size<patch_size> --d_model <d_model> --augmentation_len<augmentation_len> --augmentation_ratio<augmentation_ratio>  --learning_rate <learning_rate> --dropout <dropout> --batch_size <batch_size> --train_epochs <train_epochs> --itr <itr> --train --decoder_IN --patience <patience> --decay<decay>
 ```
 
 Here we provide a more detailed and complete command description for training and testing the model:
@@ -149,19 +144,24 @@ Here we provide a more detailed and complete command description for training an
 |      data      |                                              The dataset name                                              |
 |   root_path    |                                       The root path of the data file                                       |
 |   data_path    |                                             The data file name                                             |
-|    features    | The forecasting task. This can be set to `M`,`S` (M : multivariate forecasting, S : univariate forecasting |
-|     target     |                                         Target feature in `S` task                                         |
-|      freq      |                                   Sampling frequency for M4 sub-datasets                                   |
 |  checkpoints   |                                       Location of model checkpoints                                        |
 |   input_len    |                                           Input sequence length                                            |
 |    pred_len    |                                         Prediction sequence length                                         |
 |     enc_in     |                                                 Input size                                                 |
 |    dec_out     |                                                Output size                                                 |
+|  encoder_layer |                                            The number of stages                                            |
+|   layer_stack  |                                       The number of layers per stage                                       |
+|   patch_size   |                                The initial patch size in patch-wise attention                              |
+|  MODWT_level   |                                           The level of MODWT/MRA                                           |
+|augmentation_method   |                                           Augmentation method                                           |
+|  MODWT_level   |                                           The level of MODWT/MRA                                           |
+
+
 |    d_model     |                                             Dimension of model                                             |
 | representation |                      Representation dims in the end of the intra-reconstruction phase                      |
 |    dropout     |                                                  Dropout                                                   |
 | encoder_layer  |                                        The number of encoder layers                                        |
-|   patch_size   |                                           The size of each patch                                           |
+
 |      itr       |                                             Experiments times                                              |
 |  train_epochs  |                                      Train epochs of the second stage                                      |
 |   batch_size   |                         The batch size of training input data in the second stage                          |
